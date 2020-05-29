@@ -1,0 +1,28 @@
+{
+  "name": "tdd-kate",
+  "version": "1.0.0",
+  "description": "TDD demo scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha src/**/**.spec.js",
+    "watch": "mocha --watch src/**/**.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.ib-ci.com/projects/CAMPUS/repos/tdd-kate/browse"
+  },
+  "keywords": [
+    "tdd"
+  ],
+  "author": "dragan.bencic@infobip.com",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "latest",
+    "mocha": "latest"
+  },
+  "dependencies": {
+    "prompt": "^1.0.0",
+    "readline-sync": "^1.4.10",
+    "save": "^2.4.0"
+  }
+}
