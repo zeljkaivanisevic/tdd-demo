@@ -1,0 +1,120 @@
+<script>
+    var sirina = 400;
+    var visina = 400;
+    var matrica = createArray(visina);
+
+    for (var index_polja = 0; index_polja < 400; index_polja++) {
+        matrica[index_polja] = [];
+    }
+
+    var mirror_matrica = createArray(visina);
+
+    for (var m_sirina = 0; m_sirina < sirina; m_sirina++) {
+        for (var m_visina = 0; m_visina < visina; m_visina++) {
+            var nasumicni_broj1 = Math.random();
+            var nasumicni_broj2 = (nasumicni_broj1 * 2);
+            var nasumicni_binarni_broj = Math.floor(nasumicni_broj2);
+            if (nasumicni_binarni_broj === 1) {
+                matrica[m_sirina][m_visina] = 1;
+            } else {
+                matrica[m_sirina][m_visina] = 0;
+            }
+        }
+    }
+
+    let boje = {
+        1: '#FF0000',
+        0: '#FFFFFF'
+    }
+
+    function Game() {
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, 400, 400);
+        for (var m_sirina = 1; m_sirina < sirina; m_sirina++) {
+            for (var m_visina = 1; m_visina < y; m_visina++) {
+
+
+                ctx.fillStyle = boje[matrica[m_sirina][m_visina]];
+                ctx.fillRect(m_sirina, m_visina, 1, 1);
+
+            }
+        }
+
+       Animacija();
+       requestAnimationFrame(Game);
+    }
+
+    function createArray(redovi) {
+        var lista = [];
+        for (var index_polja = 0; index_polja < redovi; index_polja++) {
+            lista[index_polja] = [];
+        }
+        return lista;
+    }
+
+    function Animacija() {
+        for (var m_sirina = 1; m_sirina < sirina - 1; m_sirina++) {
+            for (var m_visina = 1; m_visina < visina - 1; m_visina++) {
+
+                if (matrica[m_sirina][m_visina] === 0) {
+                    switch (matrica[m_sirina - 1][m_visina - 1] + matrica[m_sirina - 1][m_visina] + matrica[m_sirina - 1][m_visina + 1] + matrica[m_sirina][m_visina - 1] + matrica[m_sirina][m_visina + 1] + matrica[m_sirina + 1][m_visina - 1] + matrica[m_sirina + 1][m_visina] + matrica[m_sirina + 1][m_visina + 1]) {
+                        case 1:
+                        case 2:
+                            mirror_matrica[m_sirina][m_visina] = 0;
+                            break;
+                        case 3:
+                            mirror_matrica[m_sirina][m_visina] = 1;
+                            break;
+                        case 4:
+                            mirror_matrica[m_sirina][m_visina] = 1;
+                        case 5:
+                            mirror_matrica[m_sirina][m_visina] = !(mirror_matrica[m_sirina][m_visina] | !mirror_matrica[m_sirina][m_visina]);
+                        default:
+                            mirror_matrica[m_sirina][m_visina] = 0;
+                    }
+                } else if (matrica[m_sirina][m_visina] === 1) {
+                    switch (matrica[m_sirina - 1][m_visina - 1] + matrica[m_sirina - 1][m_visina] + matrica[m_sirina - 1][m_visina + 1] + matrica[m_sirina][m_visina - 1] + matrica[m_sirina][m_visina + 1] + matrica[m_sirina + 1][m_visina - 1] + matrica[m_sirina + 1][m_visina] + matrica[m_sirina + 1][m_visina + 1]) {
+                        case 0:
+                        case 1:
+                            mirror_matrica[m_sirina][m_visina] = (mirror_matrica[m_sirina][m_visina] | !mirror_matrica[m_sirina][m_visina]);
+                            break;
+                        case 2:
+                            mirror_matrica[m_sirina][m_visina] = (mirror_matrica[m_sirina][m_visina] | !mirror_matrica[m_sirina][m_visina]);
+                        case 3:
+                            mirror_matrica[m_sirina][m_visina] = 1;
+                            break;
+                        case 4:
+                        case 5:
+                            mirror_matrica[m_sirina][m_visina] = (mirror_matrica[m_sirina][m_visina] & !mirror_matrica[m_sirina][m_visina]);
+                        case 6:
+                        case 7:
+                        case 8:
+                            mirror_matrica[m_sirina][m_visina] = 0;
+                            break;
+                        default:
+                            mirror_matrica[m_sirina][m_visina] = 0;
+
+                    }
+
+                }
+            }
+        }
+
+        for (var m_sirina = 0; m_sirina < sirina; m_sirina++) {
+            for (var m_visina = 0; m_visina < visina; m_visina++) {
+                matrica[m_sirina][m_visina] = mirror_matrica[m_sirina][m_visina];
+
+            }
+        }
+
+
+    }
+</script>
+<html>
+
+<body onload="Game()">
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+</body>
+
+</html>
